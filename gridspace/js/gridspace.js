@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
     selectedText=selectedText.substring(0,selectedText.length - 1);
     console.log(selectedText);
-    selectedText="ABCD";
+  
     $(".gridspaceval").val(selectedText);
   });
 
