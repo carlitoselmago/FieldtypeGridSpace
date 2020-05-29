@@ -1,0 +1,111 @@
+<?php namespace ProcessWire;
+
+
+class FieldtypeGridSpace extends Fieldtype {
+
+	public static function getModuleInfo() {
+
+		return array(
+			'title' => 'Grid Space',
+			'version' => 0,
+			'summary' => 'A grid selector for space design.',
+			'singular' => true,
+			'autoload' => true,
+			'icon' => 'smile-o',
+      'installs'=> 'InputfieldGridSpace'
+			);
+	}
+	private $allowTextFormatters = true;
+	public static $languageSupport = false;
+	/**
+	 * Return the default or if not set a blank value
+	 *
+	 */
+	 protected function allowTextFormatters($allow = null) {
+	 		if(!is_null($allow)) $this->allowTextFormatters = $allow ? true : false;
+	 		return $this->allowTextFormatters;
+	 	}
+
+	public function getBlankValue(Page $page, Field $field) {
+		//if($field->default == "0") $field->default = "000000";
+		return 'A';
+	}
+
+	public function ___getCompatibleFieldtypes(Field $field) {
+			$fieldtypes = $this->wire(new Fieldtypes());
+			foreach($this->wire('fieldtypes') as $fieldtype) {
+				if($fieldtype instanceof FieldtypeText) {
+					$fieldtypes->add($fieldtype);
+				} else {
+					$className = $fieldtype->className();
+					if($className == 'FieldtypeSelector') $fieldtypes->add($fieldtype);
+				}
+			}
+			return $fieldtypes;
+		}
+  /**
+  	 * Return the associated InputfieldGridSpace
+  	 *
+  	 */
+  public function getInputfield(Page $page, Field $field) {
+		$inputField = $this->modules->get('InputfieldGridSpace');
+		//$inputField->set('default', $field->default);
+	//	$inputField->set('grid', $field->grid);
+		return $inputField;
+	}
+
+
+	/**
+	 * Format the value for output
+	 * @param  Page   $page
+	 * @param  Field  $field
+	 * @param  mixed $value
+	 * @return string
+	 */
+	public function ___formatValue(Page $page, Field $field, $value){
+
+		$value = (string) $value;
+		$textformatters = $field->get('textformatters');
+		if($this->allowTextFormatters() && is_array($textformatters)) {
+			foreach($textformatters as $name) {
+				if(!$textformatter = $this->wire('modules')->get($name)) continue;
+				$textformatter->formatValue($page, $field, $value);
+			}
+		}
+
+		return $value;
+
+	}
+
+
+
+  /**
+  	 * sanitize the value
+  	 */
+  	public function sanitizeValue(Page $page, Field $field, $value) {
+  		return $value;
+  	}
+
+
+		public function getMatchQuery($query, $table, $subfield, $operator, $value) {
+		/** @var DatabaseQuerySelectFulltext $ft */
+		$ft = $this->wire(new DatabaseQuerySelectFulltext($query));
+		$ft->match($table, $subfield, $operator, $value);
+		return $query;
+	}
+
+	public function getDatabaseSchema(Field $field) {
+		$schema = parent::getDatabaseSchema($field);
+		$len = $this->wire('database')->getMaxIndexLength();
+		$schema['data'] = 'text NOT NULL';
+		$schema['keys']['data_exact'] = "KEY `data_exact` (`data`($len))";
+		$schema['keys']['data'] = 'FULLTEXT KEY `data` (`data`)';
+		return $schema;
+	}
+
+		/**
+	 * set the config option fields for this field
+	 *
+	 */
+
+}

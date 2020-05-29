@@ -1,0 +1,14 @@
+.gridspace table{
+  height: 100%;
+   empty-cells: show;
+   min-width: 130px;
+   border-collapse:collapse;
+}
+.gridspace table tr td{
+  border:solid 1px grey;
+    height: 100%;
+}
+.gridspace table tr{
+  height: 100%;
+  position: relative;
+}

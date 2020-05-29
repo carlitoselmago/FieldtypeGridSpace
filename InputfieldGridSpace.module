@@ -1,0 +1,71 @@
+<?php
+
+
+
+class InputfieldGridSpace extends InputfieldText {
+
+	public static function getModuleInfo() {
+		return array(
+			'title' => 'GridSpace',
+			'version' => 0,
+			'summary' => 'A grid selector for space design',
+			'requires' => array("FieldtypeGridSpace")
+			);
+	}
+
+	public function __construct() {
+		parent::__construct();
+		$this->setAttribute('type', 'text');
+	}
+
+	/**
+	 * inputfield is loaded
+	 */
+	public function init() {
+		parent::init();
+		$conf = $this->getModuleInfo();
+		$version = (int) $conf['version'];
+		// append script needed for the inputfield
+		$this->config->styles->add($this->config->urls->InputfieldGridSpace . "gridspace/css/tablecellsselection.css?v={$version}");
+		$this->config->styles->add($this->config->urls->InputfieldGridSpace . "gridspace/css/gridspace.css?v={$version}");
+		$this->config->scripts->add($this->config->urls->InputfieldGridSpace . "gridspace/js/gridspace.js?v={$version}");
+		$this->config->scripts->add($this->config->urls->InputfieldGridSpace . "gridspace/js/tablecellsselection.js?v={$version}");
+	}
+
+	/**
+	 * render the markup for this iputfield
+	 * @return string html markup
+	 */
+	public function ___render() {
+		//$this->attr('data-input-type', $this->inputType);
+	
+		$out  = "\n<div id='GridSpace_$this->name' class='gridspace' style='border:1px solid #444; display:block;";
+		$out .= "width:100%; height:300px; background-color:";
+
+		$out .= "' grid='" . $this->value . "'>";
+
+		$cols=12;
+		$out.='<table class="tablecellsselection" style="width:100%">';
+		$out.='<tr height="100">';
+		for ($x=0;$x<$cols;$x++){
+			  	$out.='<td>&nbsp;</td>';
+		}
+		$out.='</tr>';
+		$out.='</table>';
+
+		$out.="</div>";
+		$out.= $this->value.'<br>' ;
+		$out .= "<input class='gridspaceval' ". $this->getAttributesString() . "  />";
+
+
+
+		/**
+		 * add swatches for predefined color values | @Rayden
+		 */
+
+
+		return $out;
+	}
+
+
+}
