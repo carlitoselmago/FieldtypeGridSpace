@@ -3,7 +3,7 @@
 (function($, window, document, undefined) {
 
     var settings;
-    
+
     var systemSettings = {
         dataKey : 'cellsSelector',
         eventNamespace: 'cellsselector'
@@ -19,12 +19,12 @@
                 selectedCellClass : 'tcs-selected',//класс добавляемый к выделенным ячейкам таблицы
                 selectionEnabled: 'tcs-selection-enabled' //???
             };
-        
-            settings = 
-    		    (!options) ? defaultSettings
+
+            settings =
+                (!options) ? defaultSettings
                 : $.extend(defaultSettings,options);
             //todo: set listenets on all document for handle all tables added to html
-    		return this.filter("table").each(initTableIfNeed);
+            return this.filter("table").each(initTableIfNeed);
         },
 
         destroy: function(){
@@ -68,12 +68,12 @@
             initTable($table);
             $table.data(systemSettings.dataKey,getInitialData());
         }
-        
+
         //initTableCellsSelector(el);
         //$(this).__proto__.csHandler = new Handler(settings, this, document);
         //if(!$(this).csHandler) $(this).__proto__.csHandler = new Handler(settings, this, document);
-        //else $(this).csHandler.restart(); 
-      
+        //else $(this).csHandler.restart();
+
     }
 
     /** Возварщает исходные данные таблицы */
@@ -330,8 +330,9 @@
                 //клик на документе вне таблицы
                 function onOutTableClick(event){
                     //console.log('click (out of table)');
-                    isMouseDown = false;
-                    if($(event.target).closest($table).length==0) deselectAll($table);
+
+                    //isMouseDown = false;
+                    //if($(event.target).closest($table).length==0) deselectAll($table);
                 }
             }
 
@@ -420,15 +421,15 @@
         }
     }
 
-	$.fn.tableCellsSelection = function (method) {
+    $.fn.tableCellsSelection = function (method) {
         if(methods[method]) {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {
             return methods.init.apply( this, arguments );
         } else {
           $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
-        } 
-	};
+        }
+    };
 
     //**************** Table/Cells funcs
     function removeDocumentHtmlChanges($document){
@@ -473,8 +474,8 @@
          */
     }
 
-	function getSelectedDataAsText($table) {
-		//console.log('getSelectedDataAsText');
+    function getSelectedDataAsText($table) {
+        //console.log('getSelectedDataAsText');
         var selectedCells = getSelectedCells($table);//выделенные ячейки
         var selectedRows = selectedCells.closest('tr');//строки с выделенными ячейками
 
@@ -490,40 +491,40 @@
         }
         return ret;
         //if (allTables) return this.$doc.find('.cell-active');
-		//return this.$table.find('.cell-active');
-	}
+        //return this.$table.find('.cell-active');
+    }
 
-	/*function getSelectedDataAsHtml($table) {
-		//console.log('getSelectedDataAsHtml');
+    /*function getSelectedDataAsHtml($table) {
+        //console.log('getSelectedDataAsHtml');
         return '<b>getSelectedDataAsHtml</b>';
-		//if (allTables) return this.$doc.find('.cell-active');
-		//return this.$table.find('.cell-active');
-	};*/
+        //if (allTables) return this.$doc.find('.cell-active');
+        //return this.$table.find('.cell-active');
+    };*/
 
     //todo: нужно ли?
     /*
-	function restart($table) {
+    function restart($table) {
         this.$table.addClass(settings.selectableTableClass);
-		this.allCells() = this.$table.find('th, td');
-		this.init();
-	};*/
+        this.allCells() = this.$table.find('th, td');
+        this.init();
+    };*/
 
-	/*function getCell($table, x, y) {
-		if (y == 1) return $table.find('tr[data_y="1"] > th[data_x="'+x+'"]');
-		return this.$table.find('tr[data_y="'+y+'"] > td[data_x="'+x+'"]');
-	}*/
-    
-	function isSelectedCell($cell) {
-		return $cell.hasClass(settings.selectedCellClass);
-	}
+    /*function getCell($table, x, y) {
+        if (y == 1) return $table.find('tr[data_y="1"] > th[data_x="'+x+'"]');
+        return this.$table.find('tr[data_y="'+y+'"] > td[data_x="'+x+'"]');
+    }*/
+
+    function isSelectedCell($cell) {
+        return $cell.hasClass(settings.selectedCellClass);
+    }
 
     /*function selectCell($table,$cell) {
         //todo: implement
         if (isSelectedCell($cell)) return deselectCell($cell);
-		deselectAll($table);
+        deselectAll($table);
 
-		if ($cell.is('td, th')) $cell.addClass(settings.selectedCellClass);
-	}*/
+        if ($cell.is('td, th')) $cell.addClass(settings.selectedCellClass);
+    }*/
 
     function selectCells($table, data) {
         deselectAll($table);
@@ -544,9 +545,9 @@
     }
 
     //todo: удалить параметр allTables
-	function getSelectedCells($table) {
-		return $table.find('.'+settings.selectedCellClass);
-	}
+    function getSelectedCells($table) {
+        return $table.find('.'+settings.selectedCellClass);
+    }
 
     function getCoordinates($cell){
         return {
