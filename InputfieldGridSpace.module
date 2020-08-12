@@ -43,8 +43,8 @@ class InputfieldGridSpace extends InputfieldText {
 		$out .= "width:100%; height:300px; background-color:";
 
 		$out .= "' grid='" . $this->value . "'>";
-
-		$cols=7;
+	
+		$cols= $this->colnum;//12;
 		$out.='<table class="tablecellsselection" style="width:100%">';
 		$out.='<tr height="100">';
 		for ($x=0;$x<$cols;$x++){

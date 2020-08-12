@@ -26,9 +26,17 @@ class FieldtypeGridSpace extends Fieldtype {
 	 		return $this->allowTextFormatters;
 	 	}
 
+		/*
 	public function getBlankValue(Page $page, Field $field) {
-		//if($field->default == "0") $field->default = "000000";
-		return 'A';
+	 	$field->colnum = 12;
+		return $field->colnum ? $field->colnum : '';
+	}
+	*/
+	public function getInputfield(Page $page, Field $field) {
+		$inputField = $this->modules->get('InputfieldGridSpace');
+		$inputField->set('colnum', $field->colnum);
+
+		return $inputField;
 	}
 
 	public function ___getCompatibleFieldtypes(Field $field) {
@@ -47,12 +55,7 @@ class FieldtypeGridSpace extends Fieldtype {
   	 * Return the associated InputfieldGridSpace
   	 *
   	 */
-  public function getInputfield(Page $page, Field $field) {
-		$inputField = $this->modules->get('InputfieldGridSpace');
-		//$inputField->set('default', $field->default);
-	//	$inputField->set('grid', $field->grid);
-		return $inputField;
-	}
+
 
 
 	/**
@@ -103,9 +106,23 @@ class FieldtypeGridSpace extends Fieldtype {
 		return $schema;
 	}
 
+
 		/**
 	 * set the config option fields for this field
 	 *
 	 */
+	 public function ___getConfigInputfields(Field $field) {
+		 $inputfields = parent::___getConfigInputfields($field);
+		 $f = $this->modules->get("InputfieldInteger");
+		 $f->attr('name', 'colnum');
+		 $f->attr('size', 6);
+		 $f->attr('value', $field->colnum);
+		 $f->label = $this->_('Column amount');
+		 $f->description = $this->_('Set the number of columns to choose in the field. ');
+		 $f->notes = $this->_('Default if not set is 12 (based on Bootstrap).');
+		 $inputfields->append($f);
+
+		 return $inputfields;
+	 }
 
 }
