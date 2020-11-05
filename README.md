@@ -3,7 +3,7 @@ A grid selector for space design
 
 An input field for placing DOM elements in horizontal grids based on Bootstrap grid system.
 
-An example of use in frontend:
+## An example of use in frontend:
 
 PHP
 ```
