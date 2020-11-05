@@ -35,5 +35,5 @@ HTML (generated in PHP)
 </div>
 ```
 
-Known bugs:
+**Known bugs:
 -The field cannot yet be used in repeater fields or twice at the same page.
