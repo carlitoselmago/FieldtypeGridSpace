@@ -18,7 +18,7 @@ foreach($items as $item){
 }
 ```
 
-CSS (user the percentage of width and the amount of columns, in this example 7 columns with a 14.28% of width)
+CSS (Use the percentage of width and the amount of columns, in this example 7 columns with a 14.28% of width - 100/7 -)
 ```
 .grid {
   display: grid;
@@ -34,3 +34,6 @@ HTML (generated in PHP)
   <div style="grid-column-start: 7;grid-column-end: 8;" >A</div>
 </div>
 ```
+
+Known bugs:
+-The field cannot yet be used in repeater fields or twice at the same page.
