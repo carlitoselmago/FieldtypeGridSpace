@@ -40,10 +40,10 @@ class InputfieldGridSpace extends InputfieldText {
 		//$this->attr('data-input-type', $this->inputType);
 
 		$out  = "\n<div id='GridSpace_$this->name' class='gridspace' style='border:1px solid #444; display:block;";
-		$out .= "width:100%; height:300px; background-color:";
+		$out .= "width:100%; height:30px; background-color:";
 
 		$out .= "' grid='" . $this->value . "'>";
-	
+
 		$cols= $this->colnum;//12;
 		$out.='<table class="tablecellsselection" style="width:100%">';
 		$out.='<tr height="100">';
