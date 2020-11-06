@@ -11,7 +11,7 @@ foreach($items as $item){
   $gridspace=$item->gridspace;
 
   $gridspace=explode(",",$gridspace);
-  $gridcolumnstart=	intval($gridspace[0])+1;
+  $gridcolumnstart=intval($gridspace[0])+1;
   $gridcolumnend=intval(end($gridspace))+2;
   
   content.='<div data-sort="'.$item->sort.'" style="'.$grid.'">Lorem ipsum<div>';
