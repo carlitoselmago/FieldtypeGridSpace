@@ -18,6 +18,8 @@ foreach($items as $item){
   $gridcolumnstart=intval($gridspace[0])+1;
   $gridcolumnend=intval(end($gridspace))+2;
   
+  $grid='grid-column-start: '.$gridcolumnstart.'; grid-column-end:'.$gridcolumnend.';';
+  
   content.='<div data-sort="'.$item->sort.'" style="'.$grid.'">Lorem ipsum<div>';
 }
 ```
