@@ -7,7 +7,7 @@ class InputfieldGridSpace extends InputfieldText {
 	public static function getModuleInfo() {
 		return array(
 			'title' => 'GridSpace',
-			'version' => 0,
+			'version' => 0.1,
 			'summary' => 'A grid selector for space design',
 			'requires' => array("FieldtypeGridSpace")
 			);
@@ -28,7 +28,7 @@ class InputfieldGridSpace extends InputfieldText {
 		// append script needed for the inputfield
 		$this->config->styles->add($this->config->urls->InputfieldGridSpace . "gridspace/css/tablecellsselection.css?v={$version}");
 		$this->config->styles->add($this->config->urls->InputfieldGridSpace . "gridspace/css/gridspace.css?v={$version}");
-		$this->config->scripts->add($this->config->urls->InputfieldGridSpace . "gridspace/js/gridspace.js?v={$version}");
+		//$this->config->scripts->add($this->config->urls->InputfieldGridSpace . "gridspace/js/gridspace.js?v={$version}");
 		$this->config->scripts->add($this->config->urls->InputfieldGridSpace . "gridspace/js/tablecellsselection.js?v={$version}");
 	}
 
@@ -40,6 +40,7 @@ class InputfieldGridSpace extends InputfieldText {
 		//$this->attr('data-input-type', $this->inputType);
 
 		$out  = "\n<div id='GridSpace_$this->name' class='gridspace' style='border:1px solid #444; display:block;";
+		//$out  = "\n<div id='GridSpace_$this->id' class='gridspace' style='border:1px solid #444; display:block;";
 		$out .= "width:100%; height:30px; background-color:";
 
 		$out .= "' grid='" . $this->value . "'>";
@@ -56,14 +57,34 @@ class InputfieldGridSpace extends InputfieldText {
 		$out.="</div>";
 		//$out.= $this->value.'<br>' ;
 		$out .= "<input class='gridspaceval' ". $this->getAttributesString() . "  />";
+		$out.='<script>$(document).ready(function() {
 
-
+		  //init
+		  $(".InputfieldGridSpace").each(function(){
+		    var savedValue = $(".gridspaceval",this).val();
+				var este=this;
+		    if (typeof savedValue  !== "undefined") {
+		      var gridList = savedValue.split(",");
+		      gridList.forEach(function(index) {
+		        $(".tablecellsselection td:eq(" + index + ")",este).addClass("tcs-selected");
+		      });
+		      $(".tablecellsselection",this).tableCellsSelection();
+		    }
+		    $("body").on("mouseup", ".tablecellsselection", function() {
+		      var selectedText = "";
+		      $(".tablecellsselection .tcs-selected",este).each(function(este) {
+		        selectedText += $(this).index() + ",";
+		      });
+		      selectedText = selectedText.substring(0, selectedText.length - 1);
+		      $(".gridspaceval",este).val(selectedText);
+		    });
+		  });
+		});
+</script>';
 
 		/**
 		 * add swatches for predefined color values | @Rayden
 		 */
-
-
 		return $out;
 	}
 
